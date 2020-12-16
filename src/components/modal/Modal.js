@@ -4,21 +4,14 @@ import cn from "classnames";
 import styles from "./Modal.module.scss";
 import Backdrop from "../backdrop";
 
-function Title() {
-	return null;
-}
+Modal.Title = () => null;
+Modal.Body = () => null;
+Modal.Footer = () => null;
 
-function Body() {
-	return null;
-}
-
-function Footer() {
-	return null;
-}
-
-Modal.Title = Title;
-Modal.Body = Body;
-Modal.Footer = Footer;
+const getSlot = (children, type) =>
+	React.Children.toArray(children).find(
+		(child) => React.isValidElement(child) && child.type === type
+	);
 
 function Modal({ isShow, onHideModal, children, style }) {
 	const uniqID = useMemo(() => `s_${v4().replaceAll("-", "_")}`, []);
@@ -31,23 +24,11 @@ function Modal({ isShow, onHideModal, children, style }) {
 		[onHideModal, uniqID]
 	);
 
-	const title = Array.isArray(children)
-		? children.find((child) => child.type === Title)
-		: children?.type === Title
-		? children
-		: null;
+	const title = getSlot(children, Modal.Title);
 
-	const body = Array.isArray(children)
-		? children.find((child) => child.type === Body)
-		: children?.type === Body
-		? children
-		: null;
+	const body = getSlot(children, Modal.Body);
 
-	const footer = Array.isArray(children)
-		? children.find((child) => child.type === Footer)
-		: children?.type === Footer
-		? children
-		: null;
+	const footer = getSlot(children, Modal.Footer);
 
 	return (
 		<Backdrop

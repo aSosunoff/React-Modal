@@ -11,9 +11,9 @@ const App = () => {
 			<Modal isShow={isShow} onHideModal={hide}>
 				<Modal.Title>Title</Modal.Title>
 
-				<Modal.Body>Body</Modal.Body>
+				{/* <Modal.Body>Body</Modal.Body>
 
-				<Modal.Footer>Footer</Modal.Footer>
+				<Modal.Footer>Footer</Modal.Footer> */}
 			</Modal>
 
 			<BaseButton onClick={isShow ? hide : show}>Показать</BaseButton>
