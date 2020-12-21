@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "../../src";
 import BaseButton from "../UI/button/baseButton";
-import useShow from "../../hooks/useShow";
+import useShow from "../hooks/useShow";
 
 const App = () => {
 	const { isShow, show, hide } = useShow(false);
