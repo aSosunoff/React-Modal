@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "../modal";
+import Modal from "../../src";
 import BaseButton from "../UI/button/baseButton";
 import useShow from "../../hooks/useShow";
 
