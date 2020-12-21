@@ -3,10 +3,10 @@ import cn from "classnames";
 import styles from "./Backdrop.module.scss";
 
 const Backdrop = ({ isShow, clickHandler, children, className }) =>
-	isShow && (
-		<div className={cn(styles.backdrop, className)} onClick={clickHandler}>
-			{children}
-		</div>
-	);
+  isShow && (
+    <div className={cn(styles.backdrop, className)} onClick={clickHandler}>
+      {children}
+    </div>
+  );
 
 export default Backdrop;

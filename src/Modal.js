@@ -9,76 +9,76 @@ Modal.Body = () => null;
 Modal.Footer = () => null;
 
 const getSlot = (children, type) => {
-	const slot = React.Children.toArray(children).find(
-		(child) => React.isValidElement(child) && child.type === type
-	);
+  const slot = React.Children.toArray(children).find(
+    (child) => React.isValidElement(child) && child.type === type
+  );
 
-	if (!slot) {
-		return () => null;
-	}
+  if (!slot) {
+    return () => null;
+  }
 
-	return ({ children }) => React.cloneElement(children(slot.props));
+  return ({ children }) => React.cloneElement(children(slot.props));
 };
 
 function Modal({ isShow, onHideModal, children, style }) {
-	const uniqID = useMemo(() => `s_${v4().replaceAll("-", "_")}`, []);
+  const uniqID = useMemo(() => `s_${v4().replaceAll("-", "_")}`, []);
 
-	const onClick = useCallback(
-		({ target }) =>
-			document.contains(target) &&
-			!target.closest(`.${styles["modal-back__item"]}.${uniqID}`) &&
-			onHideModal(),
-		[onHideModal, uniqID]
-	);
+  const onClick = useCallback(
+    ({ target }) =>
+      document.contains(target) &&
+      !target.closest(`.${styles["modal-back__item"]}.${uniqID}`) &&
+      onHideModal(),
+    [onHideModal, uniqID]
+  );
 
-	const Title = getSlot(children, Modal.Title);
+  const Title = getSlot(children, Modal.Title);
 
-	const Body = getSlot(children, Modal.Body);
+  const Body = getSlot(children, Modal.Body);
 
-	const Footer = getSlot(children, Modal.Footer);
+  const Footer = getSlot(children, Modal.Footer);
 
-	return (
-		<Backdrop
-			className={styles["modal-back"]}
-			isShow={isShow}
-			clickHandler={onClick}
-		>
-			<div className={cn(styles["modal-back__item"], uniqID)} style={style}>
-				<Title>
-					{({ className, style, children }) => (
-						<div
-							className={cn(styles["modal-back__title"], className)}
-							style={style}
-						>
-							{children}
-						</div>
-					)}
-				</Title>
+  return (
+    <Backdrop
+      className={styles["modal-back"]}
+      isShow={isShow}
+      clickHandler={onClick}
+    >
+      <div className={cn(styles["modal-back__item"], uniqID)} style={style}>
+        <Title>
+          {({ className, style, children }) => (
+            <div
+              className={cn(styles["modal-back__title"], className)}
+              style={style}
+            >
+              {children}
+            </div>
+          )}
+        </Title>
 
-				<Body>
-					{({ className, style, children }) => (
-						<div
-							className={cn(styles["modal-back__body"], className)}
-							style={style}
-						>
-							{children}
-						</div>
-					)}
-				</Body>
+        <Body>
+          {({ className, style, children }) => (
+            <div
+              className={cn(styles["modal-back__body"], className)}
+              style={style}
+            >
+              {children}
+            </div>
+          )}
+        </Body>
 
-				<Footer>
-					{({ className, style, children }) => (
-						<div
-							className={cn(styles["modal-back__footer"], className)}
-							style={style}
-						>
-							{children}
-						</div>
-					)}
-				</Footer>
-			</div>
-		</Backdrop>
-	);
+        <Footer>
+          {({ className, style, children }) => (
+            <div
+              className={cn(styles["modal-back__footer"], className)}
+              style={style}
+            >
+              {children}
+            </div>
+          )}
+        </Footer>
+      </div>
+    </Backdrop>
+  );
 }
 
 export default Modal;
