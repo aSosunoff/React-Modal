@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import { v4 } from "uuid";
 import cn from "classnames";
 import styles from "./Modal.module.scss";
-import Backdrop from "../backdrop";
+import Backdrop from "./components/backdrop";
 
 Modal.Title = () => null;
 Modal.Body = () => null;
