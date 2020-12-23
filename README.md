@@ -1,4 +1,4 @@
-# Modal component React
+# Modal React component
 
 ## Demo:
 
