@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "../../src";
 /* import Modal from "../../dist"; */
 import BaseButton from "../UI/button/baseButton";
 import useShow from "../hooks/useShow";
+import Input from "../UI/input";
 
 const App = () => {
   const { isShow, show, hide } = useShow(false);
   const { isShow: isShow_2, show: show_2, hide: hide_2 } = useShow(false);
 
+  const [value, setValueHandler] = useState("");
+
   return (
     <>
       <Modal isShow={isShow} onHideModal={hide}>
         <Modal.Title>Title</Modal.Title>
-        <Modal.Body>Body</Modal.Body>
+        <Modal.Body>
+          <Input label="Имя" value={value} onChange={setValueHandler} />
+        </Modal.Body>
         <Modal.Footer>Footer</Modal.Footer>
       </Modal>
 
