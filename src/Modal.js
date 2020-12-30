@@ -4,21 +4,25 @@ import cn from "classnames";
 import styles from "./Modal.module.scss";
 import Backdrop from "./components/backdrop";
 
-Modal.Title = () => null;
-Modal.Body = () => null;
-Modal.Footer = () => null;
-
-const getSlot = (children, type) => {
-  const slot = React.Children.toArray(children).find(
+const getSlot = (type) => ({ child, children }) => {
+  const slot = React.Children.toArray(child).find(
     (child) => React.isValidElement(child) && child.type === type
   );
 
   if (!slot) {
-    return () => null;
+    return null;
   }
 
-  return ({ children }) => React.cloneElement(children(slot.props));
+  return React.cloneElement(children(slot.props));
 };
+
+Modal.Title = () => null;
+Modal.Body = () => null;
+Modal.Footer = () => null;
+
+const Title = getSlot(Modal.Title);
+const Body = getSlot(Modal.Body);
+const Footer = getSlot(Modal.Footer);
 
 function Modal({ isShow, onHideModal, children, style }) {
   const uniqID = useMemo(() => `s_${v4().replaceAll("-", "_")}`, []);
@@ -31,12 +35,6 @@ function Modal({ isShow, onHideModal, children, style }) {
     [onHideModal, uniqID]
   );
 
-  const Title = getSlot(children, Modal.Title);
-
-  const Body = getSlot(children, Modal.Body);
-
-  const Footer = getSlot(children, Modal.Footer);
-
   return (
     <Backdrop
       className={styles["modal-back"]}
@@ -44,8 +42,8 @@ function Modal({ isShow, onHideModal, children, style }) {
       clickHandler={onClick}
     >
       <div className={cn(styles["modal-back__item"], uniqID)} style={style}>
-        <Title>
-          {({ className, style, children }) => (
+        <Title child={children}>
+          {({ style, className, children }) => (
             <div
               className={cn(styles["modal-back__title"], className)}
               style={style}
@@ -55,8 +53,8 @@ function Modal({ isShow, onHideModal, children, style }) {
           )}
         </Title>
 
-        <Body>
-          {({ className, style, children }) => (
+        <Body child={children}>
+          {({ style, className, children }) => (
             <div
               className={cn(styles["modal-back__body"], className)}
               style={style}
@@ -66,8 +64,8 @@ function Modal({ isShow, onHideModal, children, style }) {
           )}
         </Body>
 
-        <Footer>
-          {({ className, style, children }) => (
+        <Footer child={children}>
+          {({ style, className, children }) => (
             <div
               className={cn(styles["modal-back__footer"], className)}
               style={style}
