@@ -176,6 +176,22 @@ var Backdrop = function Backdrop(_ref) {
 
 
 
+var getSlot = function getSlot(type) {
+  return function (_ref) {
+    var child = _ref.child,
+        children = _ref.children;
+    var slot = external_react_default().Children.toArray(child).find(function (child) {
+      return /*#__PURE__*/external_react_default().isValidElement(child) && child.type === type;
+    });
+
+    if (!slot) {
+      return null;
+    }
+
+    return /*#__PURE__*/external_react_default().cloneElement(children(slot.props));
+  };
+};
+
 Modal.Title = function () {
   return null;
 };
@@ -188,22 +204,9 @@ Modal.Footer = function () {
   return null;
 };
 
-var getSlot = function getSlot(children, type) {
-  var slot = external_react_default().Children.toArray(children).find(function (child) {
-    return /*#__PURE__*/external_react_default().isValidElement(child) && child.type === type;
-  });
-
-  if (!slot) {
-    return function () {
-      return null;
-    };
-  }
-
-  return function (_ref) {
-    var children = _ref.children;
-    return /*#__PURE__*/external_react_default().cloneElement(children(slot.props));
-  };
-};
+var Title = getSlot(Modal.Title);
+var Body = getSlot(Modal.Body);
+var Footer = getSlot(Modal.Footer);
 
 function Modal(_ref2) {
   var isShow = _ref2.isShow,
@@ -217,9 +220,6 @@ function Modal(_ref2) {
     var target = _ref3.target;
     return document.contains(target) && !target.closest(".".concat(Modal_module["modal-back__item"], ".").concat(uniqID)) && onHideModal();
   }, [onHideModal, uniqID]);
-  var Title = getSlot(children, Modal.Title);
-  var Body = getSlot(children, Modal.Body);
-  var Footer = getSlot(children, Modal.Footer);
   return /*#__PURE__*/external_react_default().createElement(backdrop_Backdrop, {
     className: Modal_module["modal-back"],
     isShow: isShow,
@@ -227,25 +227,31 @@ function Modal(_ref2) {
   }, /*#__PURE__*/external_react_default().createElement("div", {
     className: classnames_default()(Modal_module["modal-back__item"], uniqID),
     style: style
-  }, /*#__PURE__*/external_react_default().createElement(Title, null, function (_ref4) {
-    var className = _ref4.className,
-        style = _ref4.style,
+  }, /*#__PURE__*/external_react_default().createElement(Title, {
+    child: children
+  }, function (_ref4) {
+    var style = _ref4.style,
+        className = _ref4.className,
         children = _ref4.children;
     return /*#__PURE__*/external_react_default().createElement("div", {
       className: classnames_default()(Modal_module["modal-back__title"], className),
       style: style
     }, children);
-  }), /*#__PURE__*/external_react_default().createElement(Body, null, function (_ref5) {
-    var className = _ref5.className,
-        style = _ref5.style,
+  }), /*#__PURE__*/external_react_default().createElement(Body, {
+    child: children
+  }, function (_ref5) {
+    var style = _ref5.style,
+        className = _ref5.className,
         children = _ref5.children;
     return /*#__PURE__*/external_react_default().createElement("div", {
       className: classnames_default()(Modal_module["modal-back__body"], className),
       style: style
     }, children);
-  }), /*#__PURE__*/external_react_default().createElement(Footer, null, function (_ref6) {
-    var className = _ref6.className,
-        style = _ref6.style,
+  }), /*#__PURE__*/external_react_default().createElement(Footer, {
+    child: children
+  }, function (_ref6) {
+    var style = _ref6.style,
+        className = _ref6.className,
         children = _ref6.children;
     return /*#__PURE__*/external_react_default().createElement("div", {
       className: classnames_default()(Modal_module["modal-back__footer"], className),
